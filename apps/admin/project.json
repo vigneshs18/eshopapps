@@ -1,22 +1,22 @@
 {
-    "name": "ngshop",
+    "name": "admin",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
     "projectType": "application",
-    "sourceRoot": "apps/ngshop/src",
+    "sourceRoot": "apps/admin/src",
     "prefix": "eshopapps",
     "targets": {
         "build": {
             "executor": "@angular-devkit/build-angular:browser",
             "outputs": ["{options.outputPath}"],
             "options": {
-                "outputPath": "dist/apps/ngshop",
-                "index": "apps/ngshop/src/index.html",
-                "main": "apps/ngshop/src/main.ts",
+                "outputPath": "dist/apps/admin",
+                "index": "apps/admin/src/index.html",
+                "main": "apps/admin/src/main.ts",
                 "polyfills": ["zone.js"],
-                "tsConfig": "apps/ngshop/tsconfig.app.json",
+                "tsConfig": "apps/admin/tsconfig.app.json",
                 "inlineStyleLanguage": "scss",
-                "assets": ["apps/ngshop/src/favicon.ico", "apps/ngshop/src/assets"],
-                "styles": ["apps/ngshop/src/styles.scss"],
+                "assets": ["apps/admin/src/favicon.ico", "apps/admin/src/assets"],
+                "styles": ["apps/admin/src/styles.scss"],
                 "scripts": []
             },
             "configurations": {
@@ -50,10 +50,10 @@
             "executor": "@angular-devkit/build-angular:dev-server",
             "configurations": {
                 "production": {
-                    "browserTarget": "ngshop:build:production"
+                    "browserTarget": "admin:build:production"
                 },
                 "development": {
-                    "browserTarget": "ngshop:build:development"
+                    "browserTarget": "admin:build:development"
                 }
             },
             "defaultConfiguration": "development"
@@ -61,21 +61,21 @@
         "extract-i18n": {
             "executor": "@angular-devkit/build-angular:extract-i18n",
             "options": {
-                "browserTarget": "ngshop:build"
+                "browserTarget": "admin:build"
             }
         },
         "lint": {
             "executor": "@nrwl/linter:eslint",
             "outputs": ["{options.outputFile}"],
             "options": {
-                "lintFilePatterns": ["apps/ngshop/**/*.ts", "apps/ngshop/**/*.html"]
+                "lintFilePatterns": ["apps/admin/**/*.ts", "apps/admin/**/*.html"]
             }
         },
         "test": {
             "executor": "@nrwl/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
             "options": {
-                "jestConfig": "apps/ngshop/jest.config.ts",
+                "jestConfig": "apps/admin/jest.config.ts",
                 "passWithNoTests": true
             },
             "configurations": {
