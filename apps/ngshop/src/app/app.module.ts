@@ -8,10 +8,11 @@ import { HomePageComponent } from './pages/home-page/home-page.component';
 import { ProductListComponent } from './pages/product-list/product-list.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
+import { UiModule } from '@eshopapps/ui';
 
 @NgModule({
     declarations: [AppComponent, HomePageComponent, ProductListComponent, HeaderComponent, FooterComponent],
-    imports: [BrowserModule, RouterModule.forRoot(appRoutes)],
+    imports: [BrowserModule, RouterModule.forRoot(appRoutes), UiModule],
     providers: [],
     bootstrap: [AppComponent]
 })
