@@ -18,7 +18,8 @@
             "@eshopapps/orders": ["libs/orders/src/index.ts"],
             "@eshopapps/products": ["libs/products/src/index.ts"],
             "@eshopapps/ui": ["libs/ui/src/index.ts"],
-            "@eshopapps/users": ["libs/users/src/index.ts"]
+            "@eshopapps/users": ["libs/users/src/index.ts"],
+            "@env/*": ["environments/*"]
         }
     },
     "exclude": ["node_modules", "tmp"]
