@@ -8,6 +8,7 @@ import { environment } from '@env/environment';
 @Injectable({
   providedIn: 'root'
 })
+
 export class CategoriesService {
 
   apiUrlCategories = environment.apiUrl + 'categories';
@@ -33,4 +34,5 @@ export class CategoriesService {
   deleteCategory(categoryId: string): Observable<object> {
     return this.http.delete<object>(`${this.apiUrlCategories}/${categoryId}`);
   }
+
 }

@@ -29,7 +29,6 @@ export class CategoryListComponent implements OnInit {
   }
 
   deleteCategory(categoryId: string) {
-
     this.confirmationService.confirm({
       message: 'Do you want to Delete this Category?',
       header: 'Delete Category',
@@ -46,7 +45,6 @@ export class CategoryListComponent implements OnInit {
         });
       }
     });
-
   }
 
   updateCategory(categoryId: string) {

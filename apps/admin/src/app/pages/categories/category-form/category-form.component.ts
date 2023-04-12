@@ -3,7 +3,7 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { CategoriesService, Category } from '@eshopapps/products';
 import { MessageService } from 'primeng/api';
 import { timer } from 'rxjs';
-import { Location } from '@angular/common'
+import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 
 @Component({
