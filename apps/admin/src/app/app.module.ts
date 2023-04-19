@@ -17,9 +17,13 @@ import { CategoryListComponent } from './pages/categories/category-list/category
 import { CategoryFormComponent } from './pages/categories/category-form/category-form.component';
 import { ProductListComponent } from './pages/products/product-list/product-list.component';
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
+import { UserListComponent } from './pages/users/user-list/user-list.component';
+import { UserFormComponent } from './pages/users/user-form/user-form.component';
 
-import { CategoriesService } from '@eshopapps/products';
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { CategoriesService, ProductsService } from '@eshopapps/products';
+import { UsersService } from '@eshopapps/users';
+
 
 @NgModule({
     declarations: [
@@ -29,8 +33,10 @@ import { ConfirmationService, MessageService } from 'primeng/api';
         SidebarComponent,
         CategoryListComponent,
         CategoryFormComponent,
+        ProductListComponent,
         ProductFormComponent,
-        ProductListComponent
+        UserListComponent,
+        UserFormComponent
     ],
     imports: [
         BrowserModule,
@@ -43,10 +49,12 @@ import { ConfirmationService, MessageService } from 'primeng/api';
     ],
     providers: [
         // For Choosing India Specific Timezone - to be used with " |data" pipe
-        {provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {timezone: '+0530'}},
-        CategoriesService,
+        { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {timezone: '+0530'} },
         MessageService,
-        ConfirmationService
+        ConfirmationService,
+        CategoriesService,
+        ProductsService,
+        UsersService
     ],
     bootstrap: [AppComponent]
 })
