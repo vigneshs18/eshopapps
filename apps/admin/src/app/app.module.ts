@@ -19,10 +19,12 @@ import { ProductListComponent } from './pages/products/product-list/product-list
 import { ProductFormComponent } from './pages/products/product-form/product-form.component';
 import { UserListComponent } from './pages/users/user-list/user-list.component';
 import { UserFormComponent } from './pages/users/user-form/user-form.component';
+import { OrderListComponent } from './pages/orders/order-list/order-list.component';
+import { OrderDetailComponent } from './pages/orders/order-detail/order-detail.component';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
-import { CategoriesService, ProductsService } from '@eshopapps/products';
-import { UsersService } from '@eshopapps/users';
+// import { CategoriesService, ProductsService } from '@eshopapps/products';
+// import { UsersService } from '@eshopapps/users';
 
 
 @NgModule({
@@ -36,7 +38,9 @@ import { UsersService } from '@eshopapps/users';
         ProductListComponent,
         ProductFormComponent,
         UserListComponent,
-        UserFormComponent
+        UserFormComponent,
+        OrderListComponent,
+        OrderDetailComponent
     ],
     imports: [
         BrowserModule,
@@ -52,9 +56,9 @@ import { UsersService } from '@eshopapps/users';
         { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {timezone: '+0530'} },
         MessageService,
         ConfirmationService,
-        CategoriesService,
-        ProductsService,
-        UsersService
+        // CategoriesService,
+        // ProductsService,
+        // UsersService
     ],
     bootstrap: [AppComponent]
 })
