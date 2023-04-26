@@ -10,11 +10,13 @@ import { UserListComponent } from './pages/users/user-list/user-list.component';
 import { UserFormComponent } from './pages/users/user-form/user-form.component';
 import { OrderListComponent } from './pages/orders/order-list/order-list.component';
 import { OrderDetailComponent } from './pages/orders/order-detail/order-detail.component';
+import { AuthGaurd } from '@eshopapps/users';
 
 export const appRoutes: Route[] = [
   {
     path: '',
     component: ShellComponent,
+    canActivate: [AuthGaurd],
     children: [
       {
         path: 'dashboard',

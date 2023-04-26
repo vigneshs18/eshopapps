@@ -20,7 +20,9 @@
                         "prefix": "users",
                         "style": "kebab-case"
                     }
-                ]
+                ],
+                "no-empty-function": "off",
+                "@typescript-eslint/no-empty-function": "off"
             },
             "extends": ["plugin:@nrwl/nx/angular", "plugin:@angular-eslint/template/process-inline-templates"]
         },

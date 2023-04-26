@@ -1,13 +1,14 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
 import { RouterModule } from '@angular/router';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { DATE_PIPE_DEFAULT_OPTIONS } from '@angular/common';
 
 import { appRoutes } from './app.routes';
 import { UxModule } from './ux.module';
+import { JwtInterceptor, UsersModule } from '@eshopapps/users';
 
 import { AppComponent } from './app.component';
 import { DashboardComponent } from './pages/dashboard/dashboard.component';
@@ -49,13 +50,15 @@ import { ConfirmationService, MessageService } from 'primeng/api';
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
-        UxModule
+        UxModule,
+        UsersModule
     ],
     providers: [
         // For Choosing India Specific Timezone - to be used with " |data" pipe
         { provide: DATE_PIPE_DEFAULT_OPTIONS, useValue: {timezone: '+0530'} },
         MessageService,
         ConfirmationService,
+        { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true }
         // CategoriesService,
         // ProductsService,
         // UsersService
