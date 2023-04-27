@@ -19,7 +19,7 @@ export const appRoutes: Route[] = [
     canActivate: [AuthGaurd],
     children: [
       {
-        path: 'dashboard',
+        path: '',
         component: DashboardComponent
       },
       {
@@ -65,6 +65,11 @@ export const appRoutes: Route[] = [
       {
         path: 'orders/:id',
         component: OrderDetailComponent
+      },
+      {
+        path: '**',
+        redirectTo: '',
+        pathMatch: 'full'
       }
     ]
   }

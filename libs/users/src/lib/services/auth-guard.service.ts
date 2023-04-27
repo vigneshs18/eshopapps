@@ -1,12 +1,9 @@
 import { inject } from '@angular/core';
-import { ActivatedRouteSnapshot, CanActivateFn, Router, RouterStateSnapshot } from '@angular/router';
+import { CanActivateFn, Router } from '@angular/router';
 
 import { LocalstorageService } from './localstorage.service';
 
-export const AuthGaurd: CanActivateFn = (
-  route: ActivatedRouteSnapshot,
-  state: RouterStateSnapshot
-) => {
+export const AuthGaurd: CanActivateFn = () => {
   const router = inject(Router);
   const localStorage = inject(LocalstorageService);
 
@@ -30,5 +27,4 @@ export const AuthGaurd: CanActivateFn = (
   router.navigate(['/login']);
   return false;
 
-  
 };
