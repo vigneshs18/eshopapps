@@ -1,24 +1,26 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CategoriesService, Category, Product, ProductsService } from '@eshopapps/products';
-import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { timer, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MessageService } from 'primeng/api';
+
+import { CategoriesService, Category, Product, ProductsService } from '@eshopapps/products';
 
 @Component({
   selector: 'admin-product-form',
   templateUrl: './product-form.component.html'
 })
 
-export class ProductFormComponent implements OnInit {
-
+export class ProductFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isSubmitted = false;
   editMode = false;
   currentProductId: string;
   categories: Category[] = [];
   imageDisplay: string | ArrayBuffer;
+  endSubs$: Subject<void> = new Subject();
 
   get productForm() {
     return this.form.controls;
@@ -39,6 +41,11 @@ export class ProductFormComponent implements OnInit {
     this._checkEditMode();
   }
 
+  ngOnDestroy(): void {
+    this.endSubs$.next();
+    this.endSubs$.complete();
+  }
+
   private _initForm() {
     this.form = this.formBuilder.group({
       name: ['', Validators.required],
@@ -54,17 +61,21 @@ export class ProductFormComponent implements OnInit {
   }
 
   private _getCategories() {
-    this.categoriesService.getCategories().subscribe(categories => {
+    this.categoriesService.getCategories()
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe(categories => {
       this.categories = categories;
     });
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe(parems => {
+    this.route.params.pipe(takeUntil(this.endSubs$)).subscribe(parems => {
       if(parems.id) {
         this.editMode = true;
         this.currentProductId = parems.id;
-        this.productsService.getProduct(parems.id).subscribe({
+        this.productsService.getProduct(parems.id)
+        .pipe(takeUntil(this.endSubs$))
+        .subscribe({
           next: (product) =>{
             this.productForm.name.setValue(product.name);
             this.productForm.category.setValue(product.category.id);
@@ -132,10 +143,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   private _addProduct(productData: FormData) {
-    this.productsService.createProduct(productData).subscribe({
+    this.productsService.createProduct(productData)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe({
       next: (product: Product) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `Product ${product.name} is Created` });
-        timer(2000).subscribe(() => {
+        timer(2000).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this.location.back();
         })
       },
@@ -146,10 +159,12 @@ export class ProductFormComponent implements OnInit {
   }
 
   private _updateProduct(productData: FormData) {
-    this.productsService.updateProduct(productData, this.currentProductId).subscribe({
+    this.productsService.updateProduct(productData, this.currentProductId)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe({
       next: (product: Product) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `Product ${product.name} is Updated` });
-        timer(2000).subscribe(() => {
+        timer(2000).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this.location.back();
         })
       },

@@ -1,27 +1,28 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { CategoriesService, Category } from '@eshopapps/products';
-import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { timer, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MessageService } from 'primeng/api';
+
+import { CategoriesService, Category } from '@eshopapps/products';
 
 @Component({
   selector: 'admin-category-form',
   templateUrl: './category-form.component.html'
 })
 
-export class CategoryFormComponent implements OnInit{
-
+export class CategoryFormComponent implements OnInit, OnDestroy{
   form: FormGroup;
   isSubmitted = false;
   editMode = false;
   currentCategoryId: string;
+  endSubs$: Subject<void> = new Subject();
 
   // Object Abstraction 
   // Note: instead of using long names access to a value in HTML & TS Files use Object Abstarction
   // It is also known as getter
-
   get categoryForm() {
     return this.form.controls;
     // instead of using 'this.form.controls.name.value' now we can use 'this.categoryForm.name.value'
@@ -43,6 +44,11 @@ export class CategoryFormComponent implements OnInit{
     });
 
     this._checkEditMode();
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.next();
+    this.endSubs$.complete();
   }
 
   onSubmit() {
@@ -72,11 +78,13 @@ export class CategoryFormComponent implements OnInit{
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe(parems => {
+    this.route.params.pipe(takeUntil(this.endSubs$)).subscribe(parems => {
       if(parems.id) {
         this.editMode = true;
         this.currentCategoryId = parems.id;
-        this.categoriesService.getCategory(parems.id).subscribe({
+        this.categoriesService.getCategory(parems.id)
+        .pipe(takeUntil(this.endSubs$))
+        .subscribe({
           next: (category) =>{
             this.categoryForm.name.setValue(category.name);
             this.categoryForm.icon.setValue(category.icon);
@@ -88,10 +96,12 @@ export class CategoryFormComponent implements OnInit{
   }
 
   private _updateCategory(category: Category) {
-    this.categoriesService.updateCategory(category).subscribe({
+    this.categoriesService.updateCategory(category)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe({
       next: (category: Category) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `Category ${category.name} is Updated` });
-        timer(2000).subscribe(() => {
+        timer(2000).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this.location.back();
         })
       },
@@ -102,10 +112,12 @@ export class CategoryFormComponent implements OnInit{
   }
 
   private _addCategory(category: Category) {
-    this.categoriesService.createCategory(category).subscribe({
+    this.categoriesService.createCategory(category)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe({
       next: (category: Category) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `Category ${category.name} is Created` });
-        timer(2000).subscribe(() => {
+        timer(2000).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this.location.back();
         })
       },

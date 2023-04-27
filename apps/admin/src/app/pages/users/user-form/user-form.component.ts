@@ -1,23 +1,25 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnDestroy, OnInit } from '@angular/core';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { UsersService, User } from '@eshopapps/users';
-import { MessageService } from 'primeng/api';
-import { timer } from 'rxjs';
 import { Location } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
+import { timer, Subject } from 'rxjs';
+import { takeUntil } from 'rxjs/operators';
+import { MessageService } from 'primeng/api';
+
+import { UsersService, User } from '@eshopapps/users';
 
 @Component({
   selector: 'admin-user-form',
   templateUrl: './user-form.component.html'
 })
 
-export class UserFormComponent implements OnInit {
-
+export class UserFormComponent implements OnInit, OnDestroy {
   form: FormGroup;
   isSubmitted = false;
   editMode = false;
   currentUserId: string;
   countries = [];
+  endSubs$: Subject<void> = new Subject();
 
   get userForm() {
     return this.form.controls;
@@ -35,6 +37,11 @@ export class UserFormComponent implements OnInit {
     this._initUserForm();
     this._getCountryList();
     this._checkEditMode();
+  }
+
+  ngOnDestroy(): void {
+    this.endSubs$.next();
+    this.endSubs$.complete();
   }
 
   private _initUserForm() {
@@ -57,11 +64,13 @@ export class UserFormComponent implements OnInit {
   }
 
   private _checkEditMode() {
-    this.route.params.subscribe((params) => {
+    this.route.params.pipe(takeUntil(this.endSubs$)).subscribe((params) => {
       if (params.id) {
         this.editMode = true;
         this.currentUserId = params.id;
-        this.usersService.getUser(params.id).subscribe((user) => {
+        this.usersService.getUser(params.id)
+        .pipe(takeUntil(this.endSubs$))
+        .subscribe((user) => {
           this.userForm.name.setValue(user.name);
           this.userForm.email.setValue(user.email);
           this.userForm.phone.setValue(user.phone);
@@ -114,10 +123,12 @@ export class UserFormComponent implements OnInit {
   }
 
   private _addUser(user: User) {
-    this.usersService.createUser(user).subscribe({
+    this.usersService.createUser(user)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe({
       next: (user: User) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `User ${user.name} is Created` });
-        timer(2000).subscribe(() => {
+        timer(2000).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this.location.back();
         })
       },
@@ -128,10 +139,12 @@ export class UserFormComponent implements OnInit {
   }
 
   private _updateUser(user: User) {
-    this.usersService.updateUser(user).subscribe({
+    this.usersService.updateUser(user)
+    .pipe(takeUntil(this.endSubs$))
+    .subscribe({
       next: (user: User) => {
         this.messageService.add({ severity: 'success', summary: 'Success', detail: `User ${user.name} is Updated` });
-        timer(2000).subscribe(() => {
+        timer(2000).pipe(takeUntil(this.endSubs$)).subscribe(() => {
           this.location.back();
         })
       },
