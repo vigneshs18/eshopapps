@@ -12,9 +12,11 @@
 @import '~primeflex/primeflex.css';
 
 // Pages
+@import './apps/admin/dashboard.scss';
 
 // Shared
 @import './apps/admin/shell.scss';
+
 
 // Libs
 @import './libs/ui/ui.scss';

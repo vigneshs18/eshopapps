@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs';
+import { map } from 'rxjs/operators'; 
 
 import { Order } from '../models/order';
 import { environment } from '@env/environment';
@@ -33,6 +34,24 @@ export class OrdersService {
 
   deleteOrder(orderId: string): Observable<object> {
     return this.http.delete<object>(`${this.apiUrlOrders}/${orderId}`);
+  }
+
+  // Note: this is not map() of arrays but it is map() rxjs. That's why it is kept inside pipe().
+  // This map() is used to obtain just the resultant number instead of API returned entire object.
+  getOrdersCount(): Observable<number> {
+    return this.http
+      .get<number>(`${this.apiUrlOrders}/get/count`)
+      .pipe(map(
+        (objectValue: any) => objectValue.orderCount
+      ));
+  }
+
+  getTotalSales(): Observable<number> {
+    return this.http
+      .get<number>(`${this.apiUrlOrders}/get/totalsales`)
+      .pipe(map(
+        (objectValue: any) => objectValue.totalsales
+      ));
   }
 
 }
