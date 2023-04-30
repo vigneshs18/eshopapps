@@ -1,16 +1,10 @@
 {
     "name": "ui",
     "$schema": "../../node_modules/nx/schemas/project-schema.json",
-    "sourceRoot": "libs/ui/src",
     "projectType": "library",
+    "sourceRoot": "libs/ui/src",
+    "prefix": "eshopapps",
     "targets": {
-        "lint": {
-            "executor": "@nrwl/linter:eslint",
-            "outputs": ["{options.outputFile}"],
-            "options": {
-                "lintFilePatterns": ["libs/ui/**/*.ts"]
-            }
-        },
         "test": {
             "executor": "@nrwl/jest:jest",
             "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
@@ -23,6 +17,13 @@
                     "ci": true,
                     "codeCoverage": true
                 }
+            }
+        },
+        "lint": {
+            "executor": "@nrwl/linter:eslint",
+            "outputs": ["{options.outputFile}"],
+            "options": {
+                "lintFilePatterns": ["libs/ui/**/*.ts", "libs/ui/**/*.html"]
             }
         }
     },
