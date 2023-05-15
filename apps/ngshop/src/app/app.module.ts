@@ -8,12 +8,16 @@ import { appRoutes } from './app.routes';
 import { UxModule } from './ux.module';
 import { ProductsModule } from '@eshopapps/products';
 import { UiModule } from '@eshopapps/ui';
+import { OrdersModule } from '@eshopapps/orders';
 
 import { AppComponent } from './app.component';
 import { HomePageComponent } from './pages/home-page/home-page.component';
 import { HeaderComponent } from './shared/header/header.component';
 import { FooterComponent } from './shared/footer/footer.component';
 import { NavComponent } from './shared/nav/nav.component';
+import { MessagesComponent } from './shared/messages/messages.component';
+
+import { MessageService } from 'primeng/api';
 
 @NgModule({
     declarations: [
@@ -21,7 +25,8 @@ import { NavComponent } from './shared/nav/nav.component';
         HomePageComponent,
         HeaderComponent,
         FooterComponent,
-        NavComponent
+        NavComponent,
+        MessagesComponent
     ],
     imports: [
         BrowserModule, 
@@ -30,9 +35,10 @@ import { NavComponent } from './shared/nav/nav.component';
         RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
         UxModule,
         ProductsModule,
-        UiModule
+        UiModule,
+        OrdersModule
     ],
-    providers: [],
+    providers: [MessageService],
     bootstrap: [AppComponent]
 })
 export class AppModule {}

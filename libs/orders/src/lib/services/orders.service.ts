@@ -13,6 +13,7 @@ import { environment } from '@env/environment';
 export class OrdersService {
 
   apiUrlOrders = environment.apiUrl + 'orders';
+  apiUrlProducts = environment.apiUrl + 'products';
 
   constructor(private http: HttpClient) { }
 
@@ -52,6 +53,10 @@ export class OrdersService {
       .pipe(map(
         (objectValue: any) => objectValue.totalsales
       ));
+  }
+
+  getProduct(productId: string): Observable<any> {
+    return this.http.get<any>(`${this.apiUrlProducts}/${productId}`);
   }
 
 }

@@ -3,7 +3,7 @@ import { User } from "@eshopapps/users";
 
 export class Order {
   id?: string;
-  orderItems?: OrderItem;
+  orderItems?: OrderItem[];
   shippingAddress1?: string;
   shippingAddress2?: string;
   city?: string;
@@ -12,6 +12,6 @@ export class Order {
   phone?: string;
   status?: number;
   totalPrice?: number;
-  user?: User;
+  user?: any;
   dateOrdered?: string;
 }

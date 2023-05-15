@@ -4,8 +4,7 @@ import { Subject } from 'rxjs';
 import { takeUntil } from 'rxjs/operators';
 import { ConfirmationService, MessageService } from 'primeng/api';
 
-import { Order, OrdersService } from '@eshopapps/orders';
-import { ORDER_STATUS } from '../order.constants';
+import { Order, OrdersService, ORDER_STATUS } from '@eshopapps/orders';
 
 @Component({
   selector: 'admin-order-list',

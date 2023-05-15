@@ -5,6 +5,7 @@ import { takeUntil } from 'rxjs/operators';
 
 import { ProductsService } from '../../services/products.service';
 import { Product } from '../../models/product';
+import { CartItem, CartService } from '@eshopapps/orders';
 
 @Component({
   selector: 'products-product-page',
@@ -13,12 +14,13 @@ import { Product } from '../../models/product';
 
 export class ProductPageComponent implements OnInit, OnDestroy {
   product: Product;
-  quantity: number = 1;
+  quantity = 1;
   endSubs$: Subject<void> = new Subject();
 
   constructor(
     private route: ActivatedRoute,
-    private productsService: ProductsService
+    private productsService: ProductsService,
+    private cartService: CartService
   ) {}
 
   ngOnInit(): void {
@@ -43,6 +45,10 @@ export class ProductPageComponent implements OnInit, OnDestroy {
   }
 
   addProductToCart() {
-    console.log('dffdf');
+    const cartItem: CartItem = {
+      productId: this.product.id,
+      quantity: this.quantity
+    };
+    this.cartService.setCartItem(cartItem);
   }
 }
