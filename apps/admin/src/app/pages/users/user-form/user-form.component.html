@@ -52,7 +52,7 @@
                mask="999-999-9999"
                formControlName="phone"
                placeholder="999-999-9999"
-               class="w-full"
+               styleClass="w-full"
               ></p-inputMask>
               <small *ngIf="userForm.phone.invalid && isSubmitted" class="p-error">Phone is required</small>
             </div>
@@ -89,6 +89,7 @@
                 filterBy="name" 
                 [showClear]="true" 
                 placeholder="Select a Country"
+                styleClass="w-full"
               ></p-dropdown>
             </div>
           </div>
