@@ -24,6 +24,8 @@ import { OrderListComponent } from './pages/orders/order-list/order-list.compone
 import { OrderDetailComponent } from './pages/orders/order-detail/order-detail.component';
 
 import { ConfirmationService, MessageService } from 'primeng/api';
+import { StoreModule } from '@ngrx/store';
+import { EffectsModule } from '@ngrx/effects';
 // import { CategoriesService, ProductsService } from '@eshopapps/products';
 // import { UsersService } from '@eshopapps/users';
 
@@ -50,6 +52,8 @@ import { ConfirmationService, MessageService } from 'primeng/api';
         FormsModule,
         ReactiveFormsModule,
         RouterModule.forRoot(appRoutes, { initialNavigation: 'enabledBlocking' }),
+        StoreModule.forRoot({}),
+        EffectsModule.forRoot([]),
         UxModule,
         UsersModule
     ],

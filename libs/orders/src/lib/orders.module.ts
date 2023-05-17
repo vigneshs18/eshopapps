@@ -13,6 +13,8 @@ import { ToastModule } from 'primeng/toast';
 import { MessageService } from 'primeng/api';
 
 import { CartService } from './services/cart.service';
+import { AuthGaurd } from '@eshopapps/users';
+
 import { CartIconComponent } from './components/cart-icon/cart-icon.component';
 import { CartPageComponent } from './pages/cart-page/cart-page.component';
 import { OrderSummaryComponent } from './components/order-summary/order-summary.component';
@@ -26,6 +28,7 @@ const routes: Routes = [
     },
     {
         path: 'checkout',
+        canActivate: [AuthGaurd],
         component: CheckoutPageComponent
     },
     {

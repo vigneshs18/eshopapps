@@ -16,10 +16,10 @@ export const AuthGaurd: CanActivateFn = () => {
     const currentTime = Math.floor(new Date().getTime() / 1000);
     // console.log(currentTime);
 
-    const tokenExpired = (currentTime >= tokenDecode.iat && currentTime <= tokenDecode.exp) ? true : false;
+    const tokenExpired = (currentTime >= tokenDecode.iat && currentTime <= tokenDecode.exp) ? false : true;
     // console.log(tokenExpired);
 
-    if (tokenDecode.isAdmin && tokenExpired) {
+    if (tokenDecode.isAdmin && !tokenExpired) {
       return true;
     }
   }

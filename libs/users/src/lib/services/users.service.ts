@@ -7,6 +7,7 @@ import { User } from '../models/user';
 import { environment } from '@env/environment';
 
 import * as CountryLib from 'i18n-iso-countries';
+import { UsersFacade } from '../state/users.facade';
 declare const require: any;
 
 @Injectable({
@@ -17,8 +18,20 @@ export class UsersService {
 
   apiUrlUsers = environment.apiUrl + 'users';
 
-  constructor(private http: HttpClient) {
+  constructor(private http: HttpClient, private usersFacade: UsersFacade) {
     CountryLib.registerLocale(require("i18n-iso-countries/langs/en.json"));
+  }
+
+  initAppSession() {
+    this.usersFacade.buildUserSession();
+  }
+
+  observeCurrentUser() {
+    return this.usersFacade.currentUser$;
+  }
+
+  isCurrentUserAuth() {
+    return this.usersFacade.isAuthenticated$;
   }
 
   getCountries(): { id: string; name: string }[] {
