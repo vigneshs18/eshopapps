@@ -21,6 +21,7 @@ import { MessagesComponent } from './shared/messages/messages.component';
 import { MessageService } from 'primeng/api';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
+import { NgxStripeModule } from 'ngx-stripe';
 
 
 @NgModule({
@@ -43,7 +44,8 @@ import { EffectsModule } from '@ngrx/effects';
         ProductsModule,
         UiModule,
         OrdersModule,
-        UsersModule
+        UsersModule,
+        NgxStripeModule.forRoot('pk_test_51N8k4pSHP0ulwrHIDqBmmO7jvTxpiaNzCPOpnHEXDzfdxEz4ofqDZ5UJAizzowDBfpUxbOkTB1zOwkabTIPSc8Dq00fmcqyMR8')
     ],
     providers: [
         MessageService,

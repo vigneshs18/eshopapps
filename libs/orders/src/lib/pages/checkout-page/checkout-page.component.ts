@@ -115,22 +115,14 @@ export class CheckoutPageComponent implements OnInit, OnDestroy {
       dateOrdered: `${Date.now()}`
     };
 
-    this.ordersService.createOrder(order).subscribe({
-      next: () => {
-        // Redirect to Payment Gateway
-        // Empty Cart & Navigate to Thankyou Page
-        this.cartService.emptyCart();
-        this.router.navigate(['/success']);
-      },
-      error: () => {
-        // Display an Error Message
-        this.messageService.add({ 
-          severity: 'error', 
-          summary: 'Error', 
-          detail: 'Order Placing Failed!' 
-        });
+    this.ordersService.cacheOrderData(order);
+
+    this.ordersService.createCheckoutSession(this.orderItems).subscribe(error => {
+      if (error) {
+        console.log('error in redirect to payment');
       }
     });
+
   }
 
 }

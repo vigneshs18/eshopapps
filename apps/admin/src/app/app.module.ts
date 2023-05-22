@@ -26,8 +26,7 @@ import { OrderDetailComponent } from './pages/orders/order-detail/order-detail.c
 import { ConfirmationService, MessageService } from 'primeng/api';
 import { StoreModule } from '@ngrx/store';
 import { EffectsModule } from '@ngrx/effects';
-// import { CategoriesService, ProductsService } from '@eshopapps/products';
-// import { UsersService } from '@eshopapps/users';
+import { NgxStripeModule } from 'ngx-stripe';
 
 
 @NgModule({
@@ -55,7 +54,8 @@ import { EffectsModule } from '@ngrx/effects';
         StoreModule.forRoot({}),
         EffectsModule.forRoot([]),
         UxModule,
-        UsersModule
+        UsersModule,
+        NgxStripeModule.forRoot('pk_test_51N8k4pSHP0ulwrHIDqBmmO7jvTxpiaNzCPOpnHEXDzfdxEz4ofqDZ5UJAizzowDBfpUxbOkTB1zOwkabTIPSc8Dq00fmcqyMR8')
     ],
     providers: [
         // For Choosing India Specific Timezone - to be used with " |data" pipe
